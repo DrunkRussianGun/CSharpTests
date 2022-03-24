@@ -68,6 +68,7 @@
         <Compile Include="EntryPoint.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="RhinoMocksShould.cs" />
+        <Compile Include="System\NullableShould.cs" />
         <Compile Include="WrapSuccessfulTaskResult.cs" />
     </ItemGroup>
     <ItemGroup>

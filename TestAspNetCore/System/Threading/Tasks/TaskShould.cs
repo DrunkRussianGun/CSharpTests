@@ -6,12 +6,22 @@ using FluentAssertions;
 using MoreLinq;
 using NUnit.Framework;
 
-namespace TestNetCore
+namespace TestNetCore.System.Threading.Tasks
 {
     [TestFixture]
     public class TaskShould
     {
         private const TaskContinuationOptions onSuccess = TaskContinuationOptions.OnlyOnRanToCompletion;
+
+        [Test]
+        public async Task AwaitingNull_Throw()
+        {
+            Func<Task> nullTask = () => null;
+
+            await nullTask
+               .Awaiting(x => x.Invoke())
+               .Should().ThrowAsync<NullReferenceException>();
+        }
 
         [Test]
         public void WhenJustCreatedDelayed_NotBeRunning()
@@ -167,28 +177,6 @@ namespace TestNetCore
             };
 
             tasks.Should().OnlyContain(task => ReferenceEquals(task, tasks[0]));
-        }
-
-        [Test]
-        public void WhenReturnedFromNonAsyncMethodWithException_ThrowOriginal()
-        {
-            Func<Task> nonAsyncMethod = () => throw new ArithmeticException();
-
-            nonAsyncMethod
-                .Awaiting(x => x.Invoke())
-                .Should().Throw<ArithmeticException>();
-        }
-
-        [Test]
-        public void WhenReturnedFromAsyncMethodWithException_ThrowOriginal()
-        {
-            #pragma warning disable 1998
-            Func<Task> asyncMethod = async () => throw new ArithmeticException();
-            #pragma warning restore 1998
-
-            asyncMethod
-                .Awaiting(x => x.Invoke())
-                .Should().Throw<ArithmeticException>();
         }
 
         [Test]
