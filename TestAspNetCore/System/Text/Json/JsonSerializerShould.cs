@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using FluentAssertions;
@@ -8,10 +9,20 @@ namespace TestNetCore.System.Text.Json
 {
 	public class JsonSerializerShould
 	{
+		[Test]
+		public void ReturnUtf8Json()
+		{
+			var @object = new { Amont = 0m };
+
+			var serialized = JsonSerializer.SerializeToUtf8Bytes(@object);
+			var json = Encoding.UTF8.GetString(serialized);
+
+			json.Should().Be("{\"Amont\":0}");
+		}
+
 		[TestCaseSource(nameof(DeserializeReadOnlyAndWithPrivateSetters_TestCaseSource))]
 		public void DeserializeReadOnlyAndWithPrivateSetters(object expected)
 		{
-
 			var serialized = JsonSerializer.SerializeToUtf8Bytes(expected);
 			var actual = JsonSerializer.Deserialize(serialized, expected.GetType());
 			
