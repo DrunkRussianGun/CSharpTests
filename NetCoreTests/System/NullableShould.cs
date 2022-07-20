@@ -1,19 +1,17 @@
 ﻿using FluentAssertions;
-using NUnit.Framework;
 
-namespace NetCoreTests.System
+namespace NetCoreTests.System;
+
+[TestFixture]
+public class NullableShould
 {
-	[TestFixture]
-	public class NullableShould
+	[Test]
+	public void WhenHasNoValue_ReturnEmptyString()
 	{
-		[Test]
-		public void WhenHasNoValue_ReturnEmptyString()
-		{
-			int? nullInt = null;
+		int? nullInt = null;
 
-			var actualString = nullInt.ToString();
+		var actualString = nullInt.ToString();
 
-			actualString.Should().BeEmpty();
-		}
+		actualString.Should().BeEmpty();
 	}
 }

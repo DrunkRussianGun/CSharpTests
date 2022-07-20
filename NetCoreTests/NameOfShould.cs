@@ -1,16 +1,14 @@
 ﻿using FluentAssertions;
-using NUnit.Framework;
 
-namespace NetCoreTests
+namespace NetCoreTests;
+
+public class NameOfShould
 {
-	public class NameOfShould
+	[Test]
+	public void ForNamespace_ReturnTheLastPart()
 	{
-		[Test]
-		public void ForNamespace_ReturnTheLastPart()
-		{
-			var nameOfNamespace = nameof(NUnit.Framework);
+		var nameOfNamespace = nameof(NUnit.Framework);
 
-			nameOfNamespace.Should().Be("Framework");
-		}
+		nameOfNamespace.Should().Be("Framework");
 	}
 }

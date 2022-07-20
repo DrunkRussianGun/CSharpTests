@@ -1,10 +1,9 @@
-﻿namespace NetCoreTests
+﻿namespace NetCoreTests;
+
+public static class EntryPoint
 {
-    public static class EntryPoint
-    {
-        // public static void Main(string[] args)
-        // {
-        //     TestUri.Run();
-        // }
-    }
+    // public static void Main(string[] args)
+    // {
+    //     TestUri.Run();
+    // }
 }

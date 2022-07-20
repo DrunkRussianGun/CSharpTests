@@ -1,14 +1,13 @@
 ﻿using FluentAssertions;
 using FluentAssertions.Equivalency;
 
-namespace NetCoreTests
+namespace NetCoreTests;
+
+public class ReferenceEqualityAssertionRule : IAssertionRule
 {
-    public class ReferenceEqualityAssertionRule : IAssertionRule
+    public bool AssertEquality(IEquivalencyValidationContext context)
     {
-        public bool AssertEquality(IEquivalencyValidationContext context)
-        {
-            context.Subject.Should().BeSameAs(context.Expectation, context.Because, context.BecauseArgs);
-            return true;
-        }
+        context.Subject.Should().BeSameAs(context.Expectation, context.Because, context.BecauseArgs);
+        return true;
     }
 }

@@ -1,32 +1,29 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using FluentAssertions;
-using NUnit.Framework;
 
-namespace NetCoreTests.System.Linq
+namespace NetCoreTests.System.Linq;
+
+[TestFixture]
+public class IEnumerableShould
 {
-	[TestFixture]
-	public class IEnumerableShould
+	[Test]
+	public void WithoutToArrayCall_BeEvaluatedLazily()
 	{
-		[Test]
-		public void WithoutToArrayCall_BeEvaluatedLazily()
-		{
-			bool isEvaluated = false;
+		bool isEvaluated = false;
 
-			Enumerable
-				.Range(1, 1)
-				.Select(
-					_ =>
-					{
-						isEvaluated = true;
-						return 1;
-					})
-				.Select(x =>
+		Enumerable
+			.Range(1, 1)
+			.Select(
+				_ =>
 				{
-					isEvaluated.Should().BeTrue();
-					return (Func<int>)(() => x);
+					isEvaluated = true;
+					return 1;
 				})
-				.ToArray();
-		}
+			.Select(x =>
+			{
+				isEvaluated.Should().BeTrue();
+				return (Func<int>)(() => x);
+			})
+			.ToArray();
 	}
 }

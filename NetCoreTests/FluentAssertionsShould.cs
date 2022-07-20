@@ -1,71 +1,68 @@
-﻿using System;
-using FluentAssertions;
-using NUnit.Framework;
+﻿using FluentAssertions;
 
-namespace NetCoreTests
+namespace NetCoreTests;
+
+[TestFixture]
+public class FluentAssertionsShould
 {
-    [TestFixture]
-    public class FluentAssertionsShould
+    public class OnBeEquivalentTo : FluentAssertionsShould
     {
-        public class OnBeEquivalentTo : FluentAssertionsShould
+        [Test]
+        public void WhenEnumerablesAreStrictlyEquivalent_Pass()
         {
-            [Test]
-            public void WhenEnumerablesAreStrictlyEquivalent_Pass()
-            {
-                var first = new[] { 0, 1 };
-                var second = new[] { 0, 1 };
+            var first = new[] { 0, 1 };
+            var second = new[] { 0, 1 };
 
-                first
-                    .Invoking(x => x.Should().BeEquivalentTo(second))
-                    .Should().NotThrow();
-            }
-
-            [Test]
-            public void WhenEnumerablesContainSameElements_Pass()
-            {
-                var first = new[] { 0, 1 };
-                var second = new[] { 1, 0 };
-
-                first
-                    .Invoking(x => x.Should().BeEquivalentTo(second))
-                    .Should().NotThrow();
-            }
+            first
+                .Invoking(x => x.Should().BeEquivalentTo(second))
+                .Should().NotThrow();
         }
 
-        public class OnEqual : FluentAssertionsShould
+        [Test]
+        public void WhenEnumerablesContainSameElements_Pass()
         {
-            [Test]
-            public void WhenEnumerablesContainSameElements_Throw()
-            {
-                var first = new[] { 0, 1 };
-                var second = new[] { 1, 0 };
+            var first = new[] { 0, 1 };
+            var second = new[] { 1, 0 };
 
-                first
-                    .Invoking(x => x.Should().Equal(second))
-                    .Should().Throw<Exception>();
-            }
+            first
+                .Invoking(x => x.Should().BeEquivalentTo(second))
+                .Should().NotThrow();
         }
+    }
 
-        public class OnContainSingle : FluentAssertionsShould
+    public class OnEqual : FluentAssertionsShould
+    {
+        [Test]
+        public void WhenEnumerablesContainSameElements_Throw()
         {
-            [Test]
-            public void WhenCollectionContainsOtherNonMatchingItems_Pass()
-            {
-                var collection = new[] { 1, 2 };
+            var first = new[] { 0, 1 };
+            var second = new[] { 1, 0 };
 
-                collection
-                    .Invoking(x => x.Should().ContainSingle(number => number == 1))
-                    .Should().NotThrow();
-            }
-            [Test]
-            public void WhenCollectionContainsSeveralMatchingItemsAndOtherNonMatchingItems_Throw()
-            {
-                var collection = new[] { 1, 2, 1 };
+            first
+                .Invoking(x => x.Should().Equal(second))
+                .Should().Throw<Exception>();
+        }
+    }
 
-                collection
-                    .Invoking(x => x.Should().ContainSingle(number => number == 1))
-                    .Should().Throw<AssertionException>();
-            }
+    public class OnContainSingle : FluentAssertionsShould
+    {
+        [Test]
+        public void WhenCollectionContainsOtherNonMatchingItems_Pass()
+        {
+            var collection = new[] { 1, 2 };
+
+            collection
+                .Invoking(x => x.Should().ContainSingle(number => number == 1))
+                .Should().NotThrow();
+        }
+        [Test]
+        public void WhenCollectionContainsSeveralMatchingItemsAndOtherNonMatchingItems_Throw()
+        {
+            var collection = new[] { 1, 2, 1 };
+
+            collection
+                .Invoking(x => x.Should().ContainSingle(number => number == 1))
+                .Should().Throw<AssertionException>();
         }
     }
 }

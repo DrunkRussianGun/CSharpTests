@@ -1,6 +1,5 @@
-﻿namespace NetCoreTests.Microsoft.Extensions.DependencyInjection.Helpers
+﻿namespace NetCoreTests.Microsoft.Extensions.DependencyInjection.Helpers;
+
+public class Class : IInterface
 {
-	public class Class : IInterface
-	{
-	}
 }
