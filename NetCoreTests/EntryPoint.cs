@@ -1,4 +1,7 @@
-﻿namespace NetCoreTests;
+﻿using SomeApiClient;
+using SomeLibrary;
+
+namespace NetCoreTests;
 
 public static class EntryPoint
 {

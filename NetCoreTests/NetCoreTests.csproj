@@ -24,4 +24,8 @@
       <Using Include="NUnit.Framework" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\SomeApiClient\SomeApiClient.csproj" />
+    </ItemGroup>
+
 </Project>

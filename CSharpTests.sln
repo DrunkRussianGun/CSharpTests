@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFrameworkTests", "NetFra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreApiTests", "AspNetCoreApiTests\AspNetCoreApiTests.csproj", "{08F7A742-8BB9-4215-A34E-0DDF3284D882}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomeLibrary", "SomeLibrary\SomeLibrary.csproj", "{C9E4A61E-1812-49A9-BF1B-F07FA0916F68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomeApiClient", "SomeApiClient\SomeApiClient.csproj", "{73EF60AF-AB80-42D1-8C0D-06AF42DF4168}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{08F7A742-8BB9-4215-A34E-0DDF3284D882}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08F7A742-8BB9-4215-A34E-0DDF3284D882}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08F7A742-8BB9-4215-A34E-0DDF3284D882}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9E4A61E-1812-49A9-BF1B-F07FA0916F68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9E4A61E-1812-49A9-BF1B-F07FA0916F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9E4A61E-1812-49A9-BF1B-F07FA0916F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9E4A61E-1812-49A9-BF1B-F07FA0916F68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73EF60AF-AB80-42D1-8C0D-06AF42DF4168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73EF60AF-AB80-42D1-8C0D-06AF42DF4168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73EF60AF-AB80-42D1-8C0D-06AF42DF4168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73EF60AF-AB80-42D1-8C0D-06AF42DF4168}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
