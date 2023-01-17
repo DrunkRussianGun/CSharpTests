@@ -22,4 +22,8 @@ public class ConversionToStringShould
 
         actualString.Should().Be(",");
     }
+
+    [TestCase("\u1160", "ᅠ")]
+    public void WhenUnicodeEscape_ReturnExpectedString(string actual, string expected)
+        => actual.Should().Be(expected);
 }
