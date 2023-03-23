@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using Newtonsoft.Json;
 
 namespace NetCoreTests.Newtonsoft.Json;
@@ -61,5 +62,20 @@ public class JsonConvertShould
 
         actualProperties.Property1WithGetterOnly.Should().Be("1");
         actualProperties.Property2WithGetterOnly.Should().Be("2");
+    }
+
+    [TestCaseSource(nameof(DeserializeTimeSpan_TestCaseSource))]
+    public void DeserializeTimeSpan(string serialized, TimeSpan expected)
+    {
+        var actual = JsonConvert.DeserializeObject<TimeSpan>(serialized);
+
+        actual.Should().Be(expected);
+    }
+
+    public static IEnumerable<TestCaseData> DeserializeTimeSpan_TestCaseSource()
+    {
+        yield return new TestCaseData("\"02.03:04:05\"", new TimeSpan(2, 03, 04, 05));
+        yield return new TestCaseData("\"02:03:04:05\"", new TimeSpan(2, 03, 04, 05));
+        yield return new TestCaseData("\"03:04:05\"", new TimeSpan(03, 04, 05));
     }
 }
