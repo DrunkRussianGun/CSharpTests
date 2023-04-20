@@ -199,6 +199,61 @@ public class TaskShould
             .Should().Throw<ArithmeticException>();
     }
 
+    [Test]
+    public async Task WhenAwaitedDirectly_ThrowOnlyFirstException()
+    {
+        Func<Task> actionWithExceptions = async () =>
+        {
+            await Task.FromException(new ArithmeticException("First"));
+            await Task.FromException(new ArithmeticException("Second"));
+        };
+
+        await actionWithExceptions
+            .Awaiting(x => x.Invoke())
+            .Should().ThrowAsync<ArithmeticException>()
+            .WithMessage("First");
+    }
+
+    [Test]
+    public async Task WhenAwaitedViaWhenAll_ThrowOnlyFirstException()
+    {
+        Func<Task> actionWithExceptions = async () =>
+        {
+            await Task.WhenAll(
+                Task.FromException(new ArithmeticException("First")),
+                Task.FromException(new ArithmeticException("Second")));
+        };
+
+        await actionWithExceptions
+            .Awaiting(x => x.Invoke())
+            .Should().ThrowAsync<ArithmeticException>()
+            .WithMessage("First");
+    }
+
+    [Test]
+    public async Task WhenAwaitedInTryCatch_ThrowAggregateException()
+    {
+        Func<Task> actionWithExceptions = async () =>
+        {
+            var tasks = Task.WhenAll(
+                Task.FromException(new ArithmeticException("First")),
+                Task.FromException(new ArithmeticException("Second")));
+            try
+            {
+                await tasks;
+            }
+            catch (Exception)
+            {
+                throw tasks.Exception!;
+            }
+        };
+
+        await actionWithExceptions
+            .Awaiting(x => x.Invoke())
+            .Should().ThrowAsync<AggregateException>()
+            .WithMessage("*First*Second*");
+    }
+
     private static Task DelayWithCompletedTask(int delayInMilliseconds)
     {
         Thread.Sleep(delayInMilliseconds);
