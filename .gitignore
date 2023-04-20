@@ -375,6 +375,7 @@ FodyWeavers.xsd
 
 # Generated files
 .idea/**/*.iml
+.idea/**/vcs.xml
 .idea/**/contentModel.xml
 
 # Sensitive or high-churn files
