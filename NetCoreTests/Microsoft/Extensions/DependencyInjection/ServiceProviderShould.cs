@@ -10,6 +10,27 @@ namespace NetCoreTests.Microsoft.Extensions.DependencyInjection;
 public class ServiceProviderShould
 {
 	[Test]
+	public void NotAutoRegisterClass()
+	{
+		var serviceProvider = CreateServiceProvider(_ => { });
+
+		var actual = serviceProvider.GetService<Class>();
+
+		actual.Should().BeNull();
+	}
+
+	[Test]
+	public void BeAbleToExplicitlyRegisterClass()
+	{
+		var serviceProvider = CreateServiceProvider(
+			services => services.AddSingleton<Class>());
+
+		var actual = serviceProvider.GetService<Class>();
+
+		actual.Should().NotBeNull();
+	}
+
+	[Test]
 	public void NotAutoRegisterNestedInterface()
 	{
 		var serviceProvider = CreateServiceProvider(_ => { });
