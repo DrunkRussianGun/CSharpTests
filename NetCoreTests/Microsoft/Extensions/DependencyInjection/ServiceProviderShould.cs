@@ -1,3 +1,4 @@
+#nullable enable
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -5,13 +6,13 @@ using NetCoreTests.Microsoft.Extensions.DependencyInjection.Helpers;
 
 namespace NetCoreTests.Microsoft.Extensions.DependencyInjection;
 
-[TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class ServiceProviderShould
 {
 	[Test]
 	public void NotAutoRegisterNestedInterface()
 	{
-		var serviceProvider = CreateServiceProvider((_, _) => { });
+		var serviceProvider = CreateServiceProvider(_ => { });
 
 		var actual = serviceProvider.GetService<INestedInterface>();
 
@@ -22,7 +23,7 @@ public class ServiceProviderShould
 	public void BeAbleToExplicitlyRegisterNestedInterface()
 	{
 		var serviceProvider = CreateServiceProvider(
-			(_, services) => services.AddTransient<INestedInterface, NestedClass>());
+			services => services.AddTransient<INestedInterface, NestedClass>());
 
 		var actual = serviceProvider.GetService<INestedInterface>();
 
@@ -32,7 +33,7 @@ public class ServiceProviderShould
 	[Test]
 	public void NotAutoRegisterInterface()
 	{
-		var serviceProvider = CreateServiceProvider((_, _) => { });
+		var serviceProvider = CreateServiceProvider(_ => { });
 
 		var actual = serviceProvider.GetService<IInterface>();
 
@@ -43,7 +44,7 @@ public class ServiceProviderShould
 	public void BeAbleToRegisterInterface()
 	{
 		var serviceProvider = CreateServiceProvider(
-			(_, services) => services.AddTransient<IInterface>());
+			services => services.AddTransient<IInterface>());
 
 		var actual = serviceProvider.GetService<IInterface>();
 
@@ -55,9 +56,10 @@ public class ServiceProviderShould
 	public class NestedClass : INestedInterface { }
 
 	private static IServiceProvider CreateServiceProvider(
-		Action<HostBuilderContext, IServiceCollection> serviceCollectionConfig)
-		=> Host.CreateDefaultBuilder()
-			.ConfigureServices(serviceCollectionConfig)
-			.Build()
-			.Services;
+		Action<IServiceCollection>? serviceCollectionConfig = null)
+	{
+		var serviceCollection = new ServiceCollection();
+		serviceCollectionConfig?.Invoke(serviceCollection);
+		return serviceCollection.BuildServiceProvider();
+	}
 }
