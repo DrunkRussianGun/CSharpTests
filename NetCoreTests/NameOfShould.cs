@@ -11,4 +11,14 @@ public class NameOfShould
 
 		nameOfNamespace.Should().Be("Framework");
 	}
+
+	[Test]
+	public void ForGeneric_ReturnNameOfGenericType()
+	{
+		var actualName = NameOf<Guid>();
+
+		actualName.Should().Be("T");
+	}
+
+	private static string NameOf<T>() => nameof(T);
 }
