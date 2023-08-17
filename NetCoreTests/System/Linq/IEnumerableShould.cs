@@ -31,4 +31,17 @@ public class IEnumerableShould
 
 		isEvaluated.Should().BeTrue();
 	}
+
+	[Test]
+	public void ExceptByProduceUniqueElements()
+	{
+		var sequence = new[] { 5, 2, 6, 5, 1 }
+			.Select(x => new { Value = x })
+			.ToArray();
+		var expected = sequence.Take(3).Append(sequence.Last()).ToArray();
+
+		var actual = sequence.ExceptBy(new[] { 0 }, x => x.Value).ToArray();
+
+		actual.Should().Equal(expected);
+	}
 }
