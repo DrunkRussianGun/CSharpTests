@@ -11,7 +11,7 @@ public class IEnumerableShould
 	{
 		bool isEvaluated = false;
 
-		Enumerable
+		var lazySequence = Enumerable
 			.Range(1, 1)
 			.Select(
 				_ =>
@@ -23,7 +23,12 @@ public class IEnumerableShould
 			{
 				isEvaluated.Should().BeTrue();
 				return (Func<int>)(() => x);
-			})
-			.ToArray();
+			});
+		
+		isEvaluated.Should().BeFalse();
+			
+		_ = lazySequence.ToArray();
+
+		isEvaluated.Should().BeTrue();
 	}
 }
