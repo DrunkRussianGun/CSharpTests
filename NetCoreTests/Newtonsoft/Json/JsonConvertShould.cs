@@ -78,4 +78,26 @@ public class JsonConvertShould
         yield return new TestCaseData("\"02:03:04:05\"", new TimeSpan(2, 03, 04, 05));
         yield return new TestCaseData("\"03:04:05\"", new TimeSpan(03, 04, 05));
     }
+
+    private class WithULong
+    {
+        public ulong Value { get; set; }
+    }
+
+    [TestCaseSource(nameof(DeserializeStringAsULong_TestCaseSource))]
+    public void DeserializeStringAsULong(string stringValue, ulong expectedValue)
+    {
+        var jsonString = "{ \"Value\": " + stringValue + " }";
+        var expectedObject = new WithULong { Value = expectedValue };
+
+        var actualObject = JsonConvert.DeserializeObject<WithULong>(jsonString);
+
+        actualObject.Should().BeEquivalentTo(expectedObject);
+    }
+
+    public static IEnumerable<TestCaseData> DeserializeStringAsULong_TestCaseSource()
+    {
+        yield return new TestCaseData("\"5\"", 5UL);
+        yield return new TestCaseData("\"18446744071822883150\"", 18446744071822883150UL);
+    }
 }
