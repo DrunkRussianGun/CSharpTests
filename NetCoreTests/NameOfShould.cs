@@ -2,6 +2,7 @@
 
 namespace NetCoreTests;
 
+[Parallelizable(ParallelScope.All)]
 public class NameOfShould
 {
 	[Test]
@@ -13,7 +14,7 @@ public class NameOfShould
 	}
 
 	[Test]
-	public void ForGeneric_ReturnNameOfGenericType()
+	public void ForGeneric_ReturnNameOfGenericTypeParameter()
 	{
 		var actualName = NameOf<Guid>();
 
